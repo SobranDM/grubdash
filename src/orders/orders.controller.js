@@ -1,9 +1,22 @@
 const path = require("path");
-
-// Use the existing order data
 const orders = require(path.resolve("src/data/orders-data"));
-
-// Use this function to assigh ID's when necessary
 const nextId = require("../utils/nextId");
+const bodyDataHas = require("../services/bodyDataHas");
 
-// TODO: Implement the /orders handlers needed to make the tests pass
+function read(req, res) {
+
+}
+
+function update(req, res, next) {
+
+}
+
+function destroy(req, res) {
+
+}
+
+module.exports = {
+  read,
+  update,
+  delete: [destroy]
+}
