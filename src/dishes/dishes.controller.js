@@ -54,7 +54,7 @@ function update(req, res, next) {
     if (id != dishId) {
       return next({
         status: 400,
-        message: `Dish id in url (${dishId} does not match id in request body (${id}))`
+        message: `Dish id in url (${dishId} does not match id in request body (${id})`
       });
     }
   }
