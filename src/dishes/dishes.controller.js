@@ -16,6 +16,21 @@ function dishExists(req, res, next) {
   })
 }
 
+function idMatches(req, res, next) {
+  const { dishId } = req.params;
+  const { data: { id } = {} } = req.body;
+  if (id) {
+    if (id != dishId) {
+      return next({
+        status: 400,
+        message: `Dish id in url (${dishId}) does not match id in request body (${id})`
+      });
+    }
+    next();
+  }
+  next();
+}
+
 function priceGreaterThanZero(req, res, next) {
   const { data: { price } = {} } = req.body;
   if (price <= 0 || typeof(price) != 'number') {
@@ -49,15 +64,7 @@ function read(req, res) {
 
 function update(req, res, next) {
   const { dishId } = req.params;
-  const { data: { id, name, description, price, image_url } = {} } = req.body;
-  if (id) {
-    if (id != dishId) {
-      return next({
-        status: 400,
-        message: `Dish id in url (${dishId} does not match id in request body (${id})`
-      });
-    }
-  }
+  const { data: { name, description, price, image_url } = {} } = req.body;
   const index = dishes.findIndex(dish => dish.id === dishId);
   dishes[index] = {
     id: dishId,
@@ -87,6 +94,7 @@ module.exports = {
     bodyDataHas("description"),
     bodyDataHas("price"),
     bodyDataHas("image_url"),
+    idMatches,
     update
   ]
 }
